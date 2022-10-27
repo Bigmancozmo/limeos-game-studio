@@ -38,23 +38,22 @@ loadingscreen.Position = UDim2.new(0,0,0,0)
 loadingscreen.Font = Enum.Font.Gotham
 
 -- Create Files/Folders and Repair Existing Ones --
---[[local documents = uisfolder().Apps.Explorer.MainFrame.System_Folder.home.Documents
-if not (documents:FindFirstChild("bigmancozmo")) then
- explorer.CreateFolder("bigmancozmo","home/Documents/")
+if not (explorer.FileExists("C:/User/bigmancozmo")) then
+ mkdir("C:/User/bigmancozmo")
  print("Created bigmancozmo folder")
 end
-if not (documents.bigmancozmo:FindFirstChild("gamestudio")) then
- explorer.CreateFolder("gamestudio","home/Documents/bigmancozmo/")
+if not (explorer.FileExists("C:/User/bigmancozmo/gamestudio")) then
+ mkdir("C:/User/bigmancozmo/gamestudio")
  print("Created gamestudio folder")
 end
-if not (documents.bigmancozmo.gamestudio:FindFirstChild("config")) then
- explorer.CreateFolder("config","home/Documents/bigmancozmo/gamestudio/")
- print("Created config folder")
+if not (explorer.FileExists("C:/User/bigmancozmo/gamestudio/config.txt")) then
+ mkfile("C:/User/bigmancozmo/gamestudio/config.txt")
+ print("Created config file")
 end
-if not (documents.bigmancozmo.gamestudio:FindFirstChild("projects")) then
- explorer.CreateFolder("projects","home/Documents/bigmancozmo/gamestudio/")
+if not (explorer.FileExists("C:/User/bigmancozmo/gamestudio/projects")) then
+ mkdir("C:/User/bigmancozmo/gamestudio/projects")
  print("Created projects folder")
-end]]
+end
 
 -- Change Config --
 loadingscreen:Destroy()
