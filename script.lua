@@ -38,20 +38,20 @@ loadingscreen.Position = UDim2.new(0,0,0,0)
 loadingscreen.Font = Enum.Font.Gotham
 
 -- Create Files/Folders and Repair Existing Ones --
-if not (explorer.FileExists("C:/User/bigmancozmo")) then
- mkdir("C:/User/bigmancozmo")
- print("Created bigmancozmo folder")
+if not (explorer.FileExists("Bigmancozmo:")) then
+ explorer.CreateDrive("Bigmancozmo:")
+ print("Created Bigmancozmo drive")
 end
-if not (explorer.FileExists("C:/User/bigmancozmo/gamestudio")) then
- mkdir("C:/User/bigmancozmo/gamestudio")
+if not (explorer.FileExists("Bigmancozmo:/gamestudio")) then
+ mkdir("Bigmancozmo:/gamestudio")
  print("Created gamestudio folder")
 end
-if not (explorer.FileExists("C:/User/bigmancozmo/gamestudio/config.txt")) then
- mkfile("C:/User/bigmancozmo/gamestudio/config.txt")
+if not (explorer.FileExists("Bigmancozmo:/gamestudio/config.txt")) then
+ mkfile("Bigmancozmo:/gamestudio/config.txt")
  print("Created config file")
 end
-if not (explorer.FileExists("C:/User/bigmancozmo/gamestudio/projects")) then
- mkdir("C:/User/bigmancozmo/gamestudio/projects")
+if not (explorer.FileExists("Bigmancozmo:/gamestudio/projects")) then
+ mkdir("Bigmancozmo:/gamestudio/projects")
  print("Created projects folder")
 end
 
