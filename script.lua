@@ -39,7 +39,7 @@ loadingscreen.Font = Enum.Font.Gotham
 
 -- Create Files/Folders and Repair Existing Ones --
 if not (explorer.FileExists("Bigmancozmo:")) then
- explorer.CreateDrive("Bigmancozmo:")
+ explorer.CreateDrive("Bigmancozmo")
  print("Created Bigmancozmo drive")
 end
 if not (explorer.FileExists("Bigmancozmo:/gamestudio")) then
