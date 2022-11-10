@@ -1,5 +1,5 @@
 -- BIGMANCOZMO'S LIMEOS GAME STUDIO --
-print("Loading Beta 0.0.3")
+print("Loading v0.0.3")
 
 -- Config --
 local appName = "Bigmancozmo's LimeOS Game Studio"
