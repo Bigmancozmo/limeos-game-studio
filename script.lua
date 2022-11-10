@@ -1,4 +1,5 @@
 -- BIGMANCOZMO'S LIMEOS GAME STUDIO --
+print("Loading Beta 0.0.1")
 
 -- Config --
 local appName = "Bigmancozmo's LimeOS Game Studio"
@@ -85,10 +86,7 @@ end
 
 function setupDropdown(items, shown)
  for i, v in pairs(items) do
-  success, err = pcall(function()
-   v.Visible = false 
-  end)
-  print(err)
+  v.Visible = false 
  end
 end
 
