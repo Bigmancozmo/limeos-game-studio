@@ -70,6 +70,7 @@ local appExportBtn = new("TextButton", topbar)
 local helpBtn = new("TextButton", topbar)
 local helpDropdown = new("Frame", helpBtn)
 local helpDropdownThemes = new("TextButton", helpDropdown)
+local helpDropdownTutorials = new("TextButton", helpDropdown)
 
 -- Functions --
 function setupTopbarButton(text, btn, xSize)
@@ -86,14 +87,15 @@ end
 
 function setupDropdown(items, shown, ddObj, ddObjs)
  ddObj.Visible = shown
+ ddObj.Position = UDim2.new(0,0,0,topbarSize)
  if not ddObj:FindFirstChild("List") then
   local listlayout = new("UIListLayout", ddObj)
   listlayout.Name = "List"
  end
- ddObj.Size = UDim2.new(0, 100, 0, 12*ddObjs)
+ ddObj.Size = UDim2.new(0, 200, 0, topbarSize*ddObjs)
  if shown then
   for i, v in pairs(items) do
-   v.Size = UDim2.new(1,0,0,12)
+   v.Size = UDim2.new(1,0,0,topbarSize)
   end
  end
 end
@@ -116,9 +118,9 @@ setupTopbarButton("Export to App", appExportBtn, 120)
 setupTopbarButton("Help",helpBtn,60)
 
 -- Setup Dropdowns (Hidden) --
-setupDropdown({helpDropdownThemes}, false, helpDropdown, 1)
+setupDropdown({helpDropdownThemes, helpDropdownTutorials}, false, helpDropdown, 2)
 
 -- Bind Topbar Items to Function --
 helpBtn.MouseButton1Click:Connect(function()
-    setupDropdown({helpDropdownThemes}, true, helpDropdown, 1)
+    setupDropdown({helpDropdownThemes, helpDropdownTutorials}, not (helpDropdown.Visible), helpDropdown, 2)
 end)
