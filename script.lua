@@ -1,5 +1,5 @@
 -- BIGMANCOZMO'S LIMEOS GAME STUDIO --
-print("Loading Beta 0.0.1")
+print("Loading Beta 0.0.2")
 
 -- Config --
 local appName = "Bigmancozmo's LimeOS Game Studio"
@@ -96,6 +96,13 @@ function setupDropdown(items, shown, ddObj, ddObjs)
  if shown then
   for i, v in pairs(items) do
    v.Size = UDim2.new(1,0,0,topbarSize)
+   v.TextXAlignment = 0
+   v.TextScaled = true
+   v.BackgroundColor3 = topbarColor
+   if not v:FindFirstChild("Corner") then
+    local corner = new("UICorner", v)
+    corner.Name = "Corner"
+   end
   end
  end
 end
