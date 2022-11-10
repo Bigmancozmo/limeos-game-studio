@@ -84,9 +84,17 @@ function setupTopbarButton(text, btn, xSize)
  return btn
 end
 
-function setupDropdown(items, shown)
- for i, v in pairs(items) do
-  v.Visible = false 
+function setupDropdown(items, shown, ddObj, ddObjs)
+ ddObj.Visible = shown
+ if not ddObj:FindFirstChild("List") then
+  local listlayout = new("UIListLayout", ddObj)
+  listlayout.Name = "List"
+ end
+ ddObj.Size = UDim2.new(0, 100, 0, 12*ddObjs)
+ if shown then
+  for i, v in pairs(items) do
+   v.Size = UDim2.new(1,0,0,12)
+  end
  end
 end
 
@@ -108,9 +116,9 @@ setupTopbarButton("Export to App", appExportBtn, 120)
 setupTopbarButton("Help",helpBtn,60)
 
 -- Setup Dropdowns (Hidden) --
-setupDropdown({helpDropdownThemes}, false)
+setupDropdown({helpDropdownThemes}, false, helpDropdown, 1)
 
 -- Bind Topbar Items to Function --
 helpBtn.MouseButton1Click:Connect(function()
-    setupDropdown({helpDropdownThemes}, true)
+    setupDropdown({helpDropdownThemes}, true, helpDropdown, 1)
 end)
