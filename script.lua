@@ -109,6 +109,9 @@ setupTopbarButton("Export to Website", webExportBtn, 150)
 setupTopbarButton("Export to App", appExportBtn, 120)
 setupTopbarButton("Help",helpBtn,60)
 
+-- Setup Dropdowns (Hidden) --
+setupDropdown({helpDropdownThemes}, false)
+
 -- Bind Topbar Items to Function --
 helpBtn.MouseButton1Click:Connect(function()
     setupDropdown({helpDropdownThemes}, true)
