@@ -83,8 +83,13 @@ function setupTopbarButton(text, btn, xSize)
  return btn
 end
 
-function setupDropdown(items, dropdown)
-
+function setupDropdown(items, shown)
+ for i, v in pairs(items) do
+  success, err = pcall(function()
+   v.Visible = false 
+  end)
+  print(err)
+ end
 end
 
 -- Set Properties --
@@ -106,5 +111,5 @@ setupTopbarButton("Help",helpBtn,60)
 
 -- Bind Topbar Items to Function --
 helpBtn.MouseButton1Click:Connect(function()
-    
+    setupDropdown({helpDropdownThemes}, true)
 end)
