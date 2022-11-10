@@ -1,4 +1,5 @@
 -- BIGMANCOZMO'S LIMEOS GAME STUDIO --
+print("Loading Beta 0.0.3")
 
 -- Config --
 local appName = "Bigmancozmo's LimeOS Game Studio"
@@ -69,6 +70,7 @@ local appExportBtn = new("TextButton", topbar)
 local helpBtn = new("TextButton", topbar)
 local helpDropdown = new("Frame", helpBtn)
 local helpDropdownThemes = new("TextButton", helpDropdown)
+local helpDropdownTutorials = new("TextButton", helpDropdown)
 
 -- Functions --
 function setupTopbarButton(text, btn, xSize)
@@ -83,8 +85,29 @@ function setupTopbarButton(text, btn, xSize)
  return btn
 end
 
-function setupDropdown(items, dropdown)
-
+function setupDropdown(items, shown, ddObj, ddObjs)
+ ddObj.Visible = shown
+ ddObj.Transparency = 1
+ ddObj.Position = UDim2.new(0,0,0,topbarSize)
+ if not ddObj:FindFirstChild("List") then
+  local listlayout = new("UIListLayout", ddObj)
+  listlayout.Name = "List"
+ end
+ ddObj.Size = UDim2.new(0, 200, 0, topbarSize*ddObjs)
+ if shown then
+  for i, v in pairs(items) do
+   v.Size = UDim2.new(1,0,0,topbarSize)
+   v.TextXAlignment = 0
+   v.TextScaled = true
+   v.BackgroundColor3 = topbarColor
+   v.Font = Enum.Font.Gotham
+   v.TextColor3 = Color3.new(1,1,1)
+   if not v:FindFirstChild("Corner") then
+    local corner = new("UICorner", v)
+    corner.Name = "Corner"
+   end
+  end
+ end
 end
 
 -- Set Properties --
@@ -95,6 +118,8 @@ topbar.BackgroundTransparency = topbarTransparency
 topbar.BorderSizePixel = 1
 topbar.BorderColor3 = borderColor
 topbarList.FillDirection = Enum.FillDirection.Horizontal
+helpDropdownThemes.Text = "Themes"
+helpDropdownTutorials.Text = "Tutorials"
 
 -- Create Topbar Items --
 setupTopbarButton("Save",saveBtn,60)
@@ -104,7 +129,10 @@ setupTopbarButton("Export to Website", webExportBtn, 150)
 setupTopbarButton("Export to App", appExportBtn, 120)
 setupTopbarButton("Help",helpBtn,60)
 
+-- Setup Dropdowns (Hidden) --
+setupDropdown({helpDropdownThemes, helpDropdownTutorials}, false, helpDropdown, 2)
+
 -- Bind Topbar Items to Function --
 helpBtn.MouseButton1Click:Connect(function()
-    
+    setupDropdown({helpDropdownThemes, helpDropdownTutorials}, not (helpDropdown.Visible), helpDropdown, 2)
 end)
