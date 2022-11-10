@@ -118,6 +118,8 @@ topbar.BackgroundTransparency = topbarTransparency
 topbar.BorderSizePixel = 1
 topbar.BorderColor3 = borderColor
 topbarList.FillDirection = Enum.FillDirection.Horizontal
+helpDropdownThemes.Text = "Themes"
+helpDropdownTutorials.Text = "Tutorials"
 
 -- Create Topbar Items --
 setupTopbarButton("Save",saveBtn,60)
