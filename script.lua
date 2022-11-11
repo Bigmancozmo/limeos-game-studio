@@ -21,7 +21,7 @@ if runOnWebsite then
  window = website()
 else
  window = createapp(appName, 10383211306)
- loadlib("LimeAppFramework").MaximizeApp("Bigmancozmo's LimeOS Game Studio")
+ window.Parent.Size = UDim2.new(1,0,1,0)
 end
 local app = new("Frame", window)
 app.Size = UDim2.new(1,0,1,0)
