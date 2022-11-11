@@ -1,11 +1,17 @@
 -- BIGMANCOZMO'S LIMEOS GAME STUDIO --
-print("Loading v0.0.4")
+print("Loading v0.0.5")
 
 -- Config --
+local APP_VERSION = "v0.0.5"
+local GITHUB_BRANCH = "main"
+local IS_BETA = GITHUB_BRANCH == "beta"
 local appName = "Bigmancozmo's LimeOS Game Studio"
 local topbarSize = 20
 local topbarTransparency = 0
 local runOnWebsite = false
+local updateVersionUrl = "https://raw.githubusercontent.com/Bigmancozmo/limeos-game-studio/" .. GITHUB_BRANCH .. "/newestVersion.txt"
+local promptedUpdate = false
+local updateStarted = false
 
 -- Colors --
 local topbarColor = Color3.fromRGB(35,35,35)
@@ -21,7 +27,7 @@ if runOnWebsite then
  window = website()
 else
  window = createapp(appName, 10383211306)
- window.Parent.Size = UDim2.new(1,0,1,0)
+ window.Parent.Size = UDim2.new(0.8,0,0.8,0)
 end
 local app = new("Frame", window)
 app.Size = UDim2.new(1,0,1,0)
@@ -138,3 +144,20 @@ setupDropdown({helpDropdownThemes, helpDropdownTutorials, helpDropdownCredits}, 
 helpBtn.MouseButton1Click:Connect(function()
     setupDropdown({helpDropdownThemes, helpDropdownTutorials, helpDropdownCredits}, not (helpDropdown.Visible), helpDropdown, 2)
 end)
+
+-- Auto-Update --
+while not updateStarted do -- created with help from palenoobs
+ local ver = HttpGet(updateVersionUrl)
+ print(ver)
+ if APP_VERSION.."\n" ~= ver and promptedUpdate == false then
+  print("Update Available!")
+  local userResponse = loadlib("LimeNotifications").CreateNotification("Info","Update Found! Restart App?",2)
+  promptedUpdate = true
+  if userResponse == 2 then
+   updateStarted = true
+   loadlib("LimeAppFramework").CloseProcess(appName)
+   loadlib("Loadstring")(HttpGet("https://raw.githubusercontent.com/Bigmancozmo/limeos-game-studio/"..GITHUB_BRANCH.."/script.lua"))()
+  end
+ end
+ wait(60)
+end
