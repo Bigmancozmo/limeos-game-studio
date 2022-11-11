@@ -1,8 +1,8 @@
 -- BIGMANCOZMO'S LIMEOS GAME STUDIO --
-print("Loading v0.0.6")
+print("Loading v0.0.7")
 
 -- Config --
-local APP_VERSION = "v0.0.6"
+local APP_VERSION = "v0.0.7"
 local GITHUB_BRANCH = "main"
 local IS_BETA = GITHUB_BRANCH == "beta"
 local appName = "Bigmancozmo's LimeOS Game Studio"
@@ -20,6 +20,7 @@ local borderColor = Color3.fromRGB(35,35,35)
 
 -- Modules --
 local explorer = loadlib("LimeExplorer")
+local notifications = loadlib("LimeNotifications")
 
 -- Create App --
 local window
@@ -27,7 +28,7 @@ if runOnWebsite then
  window = website()
 else
  window = createapp(appName, 10383211306)
- window.Parent.Size = UDim2.new(0.8,0,0.8,0)
+ window.Parent.Size = UDim2.new(1,0,1,0)
 end
 local app = new("Frame", window)
 app.Size = UDim2.new(1,0,1,0)
@@ -78,6 +79,7 @@ local helpDropdown = new("Frame", helpBtn)
 local helpDropdownThemes = new("TextButton", helpDropdown)
 local helpDropdownTutorials = new("TextButton", helpDropdown)
 local helpDropdownCredits = new("TextButton", helpDropdown)
+local helpDropdownAbout = new("TextButton", helpDropdown)
 
 -- Functions --
 function setupTopbarButton(text, btn, xSize)
@@ -94,11 +96,15 @@ end
 
 function setupDropdown(items, shown, ddObj, ddObjs)
  ddObj.Visible = shown
- ddObj.Transparency = 1
+ ddObj.BackgroundColor3 = topbarColor
  ddObj.Position = UDim2.new(0,0,0,topbarSize)
  if not ddObj:FindFirstChild("List") then
   local listlayout = new("UIListLayout", ddObj)
   listlayout.Name = "List"
+ end
+ if not ddObj:FindFirstChild("Corner") then
+  local listlayout = new("UICorner", ddObj)
+  listlayout.Name = "Corner"
  end
  ddObj.Size = UDim2.new(0, 200, 0, topbarSize*ddObjs)
  if shown then
@@ -128,6 +134,7 @@ topbarList.FillDirection = Enum.FillDirection.Horizontal
 helpDropdownThemes.Text = "Themes"
 helpDropdownTutorials.Text = "Tutorials"
 helpDropdownCredits.Text = "Credits"
+helpDropdownAbout.Text = "About"
 
 -- Create Topbar Items --
 setupTopbarButton("Save",saveBtn,60)
@@ -138,11 +145,14 @@ setupTopbarButton("Export to App", appExportBtn, 120)
 setupTopbarButton("Help",helpBtn,60)
 
 -- Setup Dropdowns (Hidden) --
-setupDropdown({helpDropdownThemes, helpDropdownTutorials, helpDropdownCredits}, false, helpDropdown, 2)
+setupDropdown({helpDropdownThemes, helpDropdownTutorials, helpDropdownCredits, helpDropdownAbout}, false, helpDropdown, 2)
 
 -- Bind Buttons to Function --
 helpBtn.MouseButton1Click:Connect(function()
-    setupDropdown({helpDropdownThemes, helpDropdownTutorials, helpDropdownCredits}, not (helpDropdown.Visible), helpDropdown, 2)
+ setupDropdown({helpDropdownThemes, helpDropdownTutorials, helpDropdownCredits, helpDropdownAbout}, not (helpDropdown.Visible), helpDropdown, 2)
+end)
+helpDropdownAbout.MouseButton1Click:Connect(function()
+ notifications.CreateNotification("Info", "Bigmancozmo Game Studio is developed by Bigmancozmo, with help from PaleNoobs, designed to help unexperienced players create their own games, apps, and websites.", 1)
 end)
 
 -- Auto-Update --
@@ -156,7 +166,7 @@ while not updateStarted do -- created with help from palenoobs
   local num1 = tonumber(str1)
   if num1 < num2 then
    print("Update Available!")
-   local userResponse = loadlib("LimeNotifications").CreateNotification("Info","Update Found! Restart App?",2)
+   local userResponse = notifications.CreateNotification("Info","Update Found! Restart App?",2)
    promptedUpdate = true
    if userResponse == 2 then
     updateStarted = true
