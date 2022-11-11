@@ -21,7 +21,7 @@ if runOnWebsite then
  window = website()
 else
  window = createapp(appName, 10383211306)
- window.Parent.Size = UDim2.new(0.8,0,0.8,0)
+ loadlib("LimeAppFramework").MaximizeApp("Bigmancozmo's LimeOS Game Studio")
 end
 local app = new("Frame", window)
 app.Size = UDim2.new(1,0,1,0)
@@ -71,6 +71,7 @@ local helpBtn = new("TextButton", topbar)
 local helpDropdown = new("Frame", helpBtn)
 local helpDropdownThemes = new("TextButton", helpDropdown)
 local helpDropdownTutorials = new("TextButton", helpDropdown)
+local helpDropdownCredits = new("TextButton", helpDropdown)
 
 -- Functions --
 function setupTopbarButton(text, btn, xSize)
@@ -120,6 +121,7 @@ topbar.BorderColor3 = borderColor
 topbarList.FillDirection = Enum.FillDirection.Horizontal
 helpDropdownThemes.Text = "Themes"
 helpDropdownTutorials.Text = "Tutorials"
+helpDropdownCredits.Text = "Credits"
 
 -- Create Topbar Items --
 setupTopbarButton("Save",saveBtn,60)
@@ -130,9 +132,9 @@ setupTopbarButton("Export to App", appExportBtn, 120)
 setupTopbarButton("Help",helpBtn,60)
 
 -- Setup Dropdowns (Hidden) --
-setupDropdown({helpDropdownThemes, helpDropdownTutorials}, false, helpDropdown, 2)
+setupDropdown({helpDropdownThemes, helpDropdownTutorials, helpDropdownCredits}, false, helpDropdown, 2)
 
--- Bind Topbar Items to Function --
+-- Bind Buttons to Function --
 helpBtn.MouseButton1Click:Connect(function()
-    setupDropdown({helpDropdownThemes, helpDropdownTutorials}, not (helpDropdown.Visible), helpDropdown, 2)
+    setupDropdown({helpDropdownThemes, helpDropdownTutorials, helpDropdownCredits}, not (helpDropdown.Visible), helpDropdown, 2)
 end)
