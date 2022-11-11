@@ -1,8 +1,8 @@
 -- BIGMANCOZMO'S LIMEOS GAME STUDIO --
-print("Loading v0.0.5")
+print("Loading v0.0.6")
 
 -- Config --
-local APP_VERSION = "v0.0.5"
+local APP_VERSION = "v0.0.6"
 local GITHUB_BRANCH = "main"
 local IS_BETA = GITHUB_BRANCH == "beta"
 local appName = "Bigmancozmo's LimeOS Game Studio"
@@ -150,14 +150,20 @@ while not updateStarted do -- created with help from palenoobs
  local ver = HttpGet(updateVersionUrl)
  print(ver)
  if APP_VERSION.."\n" ~= ver and promptedUpdate == false then
-  print("Update Available!")
-  local userResponse = loadlib("LimeNotifications").CreateNotification("Info","Update Found! Restart App?",2)
-  promptedUpdate = true
-  if userResponse == 2 then
-   updateStarted = true
-   loadlib("LimeAppFramework").CloseProcess(appName)
-   loadlib("Loadstring")(HttpGet("https://raw.githubusercontent.com/Bigmancozmo/limeos-game-studio/"..GITHUB_BRANCH.."/script.lua"))()
+  local str2 = string.gsub(string.gsub(ver, "%.", ""), "%v", "")
+  local num2 = tonumber(str2)
+  local str1 = string.gsub(string.gsub(APP_VERSION, "%.", ""), "%v", "")
+  local num1 = tonumber(str1)
+  if num1 < num2 then
+   print("Update Available!")
+   local userResponse = loadlib("LimeNotifications").CreateNotification("Info","Update Found! Restart App?",2)
+   promptedUpdate = true
+   if userResponse == 2 then
+    updateStarted = true
+    loadlib("LimeAppFramework").CloseProcess(appName)
+    loadlib("Loadstring")(HttpGet("https://raw.githubusercontent.com/Bigmancozmo/limeos-game-studio/"..GITHUB_BRANCH.."/script.lua"))()
+   end
   end
  end
- wait(60)
+ wait(30)
 end
