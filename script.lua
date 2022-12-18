@@ -67,7 +67,12 @@ end
 loadingscreen:Destroy()
 
 -- Create Objects --
-local topbar = new("Frame", window)
+local topbar
+if runOnWebsite then
+ topbar = new("ScrollingFrame", window)
+else
+ topbar = new("Frame", window)
+end
 local topbarList = new("UIListLayout", topbar)
 local saveBtn = new("TextButton", topbar)
 local saveAsBtn = new("TextButton", topbar)
@@ -157,24 +162,28 @@ helpDropdownAbout.MouseButton1Click:Connect(function()
 end)
 
 -- Auto-Update --
-while not updateStarted do -- created with help from palenoobs
- local ver = HttpGet(updateVersionUrl)
- print(ver)
- if APP_VERSION.."\n" ~= ver and promptedUpdate == false then
-  local str2 = string.gsub(string.gsub(ver, "%.", ""), "%v", "")
-  local num2 = tonumber(str2)
-  local str1 = string.gsub(string.gsub(APP_VERSION, "%.", ""), "%v", "")
-  local num1 = tonumber(str1)
-  if num1 < num2 then
-   print("Update Available!")
-   local userResponse = notifications.CreateNotification("Info","Update Found! Restart App?",2)
-   promptedUpdate = true
-   if userResponse == 2 then
-    updateStarted = true
-    loadlib("LimeAppFramework").CloseProcess(appName)
-    loadlib("Loadstring")(HttpGet("https://raw.githubusercontent.com/Bigmancozmo/limeos-game-studio/"..GITHUB_BRANCH.."/script.lua"))()
+if not runOnWebsite then
+ while not updateStarted do -- created with help from palenoobs
+  local ver = HttpGet(updateVersionUrl)
+  print(ver)
+  if APP_VERSION.."\n" ~= ver and promptedUpdate == false then
+   local str2 = string.gsub(string.gsub(ver, "%.", ""), "%v", "")
+   local num2 = tonumber(str2)
+   local str1 = string.gsub(string.gsub(APP_VERSION, "%.", ""), "%v", "")
+   local num1 = tonumber(str1)
+   if num1 < num2 then
+    print("Update Available!")
+    local userResponse = notifications.CreateNotification("Info","Update Found! Restart App?",2)
+    promptedUpdate = true
+    if userResponse == 2 then
+     updateStarted = true
+     loadlib("LimeAppFramework").CloseProcess(appName)
+     loadlib("Loadstring")(HttpGet("https://raw.githubusercontent.com/Bigmancozmo/limeos-game-studio/"..GITHUB_BRANCH.."/script.lua"))()
+    end
    end
   end
+  wait(30)
  end
- wait(30)
 end
+
+loadlib("LimeAppFramework").CloseProcess(appName)
