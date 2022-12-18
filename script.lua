@@ -178,7 +178,7 @@ if not runOnWebsite then
     if userResponse == 2 then
      updateStarted = true
      loadlib("LimeAppFramework").CloseProcess(appName)
-     loadlib("Loadstring")(HttpGet("https://raw.githubusercontent.com/Bigmancozmo/limeos-game-studio/"..GITHUB_BRANCH.."/script.lua"))()
+     loadlib("Loadstring")(HttpGet("https://raw.githubusercontent.com/Bigmancozmo/limeos-game-studio/"..GITHUB_BRANCH.."/script.lua"), getfenv())()
     end
    end
   end
