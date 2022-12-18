@@ -94,7 +94,8 @@ function setupTopbarButton(text, btn, xSize)
  return btn
 end
 
-function setupDropdown(items, shown, ddObj, ddObjs)
+function setupDropdown(items, shown, ddObj)
+ local ddObjs = #items
  ddObj.Visible = shown
  ddObj.BackgroundColor3 = topbarColor
  ddObj.Position = UDim2.new(0,0,0,topbarSize)
@@ -145,11 +146,11 @@ setupTopbarButton("Export to App", appExportBtn, 120)
 setupTopbarButton("Help",helpBtn,60)
 
 -- Setup Dropdowns (Hidden) --
-setupDropdown({helpDropdownThemes, helpDropdownTutorials, helpDropdownCredits, helpDropdownAbout}, false, helpDropdown, 2)
+setupDropdown({helpDropdownThemes, helpDropdownTutorials, helpDropdownCredits, helpDropdownAbout}, false, helpDropdown)
 
 -- Bind Buttons to Function --
 helpBtn.MouseButton1Click:Connect(function()
- setupDropdown({helpDropdownThemes, helpDropdownTutorials, helpDropdownCredits, helpDropdownAbout}, not (helpDropdown.Visible), helpDropdown, 2)
+ setupDropdown({helpDropdownThemes, helpDropdownTutorials, helpDropdownCredits, helpDropdownAbout}, not (helpDropdown.Visible), helpDropdown)
 end)
 helpDropdownAbout.MouseButton1Click:Connect(function()
  notifications.CreateNotification("Info", "Bigmancozmo Game Studio is developed by Bigmancozmo, with help from PaleNoobs, designed to help unexperienced players create their own games, apps, and websites.", 1)
