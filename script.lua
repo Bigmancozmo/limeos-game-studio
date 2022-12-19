@@ -1,5 +1,5 @@
 -- BIGMANCOZMO'S LIMEOS GAME STUDIO --
-print("Loading v0.0.7")
+print("Loading v0.0.8")
 
 -- Config --
 local APP_VERSION = "v0.0.8"
