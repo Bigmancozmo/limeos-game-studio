@@ -2,7 +2,7 @@
 print("Loading v0.0.7")
 
 -- Config --
-local APP_VERSION = "v0.0.7"
+local APP_VERSION = "v0.0.8"
 local GITHUB_BRANCH = "main"
 local IS_BETA = GITHUB_BRANCH == "beta"
 local appName = "Bigmancozmo's LimeOS Game Studio"
@@ -163,6 +163,11 @@ end)
 
 -- Auto-Update --
 if not runOnWebsite then
+ window:GetPropertyChangedSignal("Visible"):Connect(function()
+  if not window.Visible then
+   updateStarted = true
+  end
+ end)
  while not updateStarted do -- created with help from palenoobs
   local ver = HttpGet(updateVersionUrl)
   print(ver)
@@ -185,5 +190,3 @@ if not runOnWebsite then
   wait(30)
  end
 end
-
-loadlib("LimeAppFramework").CloseProcess(appName)
