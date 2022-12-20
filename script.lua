@@ -163,11 +163,11 @@ end)
 
 -- Auto-Update --
 if not runOnWebsite then
+ window.Parent.TopBar.Info.Close.MouseButton1Click:Connect(function()
+  updateStarted = true
+  print("App closed!")
+ end)
  while not updateStarted do -- created with help from palenoobs
-  if window == uifolder() then
-   updateStarted = true
-   print("closing...")
-  end
   local ver = HttpGet(updateVersionUrl)
   print(ver)
   if APP_VERSION.."\n" ~= ver and promptedUpdate == false then
