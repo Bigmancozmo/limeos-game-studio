@@ -166,6 +166,7 @@ if not runOnWebsite then
  window:GetPropertyChangedSignal("Visible"):Connect(function()
   if not window.Visible then
    print("Exiting Loop & Closing Game Studio")
+   loadlib("LimeAppFramework").CloseProcess(appName)
    updateStarted = true
   end
  end)
@@ -190,4 +191,5 @@ if not runOnWebsite then
   end
   wait(30)
  end
+ loadlib("LimeAppFramework").CloseProcess(appName)
 end
