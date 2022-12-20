@@ -129,6 +129,12 @@ function setupDropdown(items, shown, ddObj)
  end
 end
 
+function handleError(err) then
+ local userResponse = notifications.CreateNotification("Error","It looks like the engine ran into an error! Send this to Bigmancozmo#1960 on Discord: "..err,1)
+ updateStarted = true
+ loadlib("LimeAppFramework").CloseProcess(appName)
+end
+
 -- Set Properties --
 topbar.BackgroundColor3 = topbarColor
 topbar.Size = UDim2.new(1,0,0,topbarSize)
@@ -188,5 +194,5 @@ if not runOnWebsite then
   end
   wait(30)
  end
- loadlib("LimeAppFramework").CloseProcess(appName)
+ 
 end
