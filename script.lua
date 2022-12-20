@@ -135,6 +135,8 @@ function handleError(err) then
  loadlib("LimeAppFramework").CloseProcess(appName)
 end
 
+handleError("TEST ERROR, IGNORE THIS")
+
 -- Set Properties --
 topbar.BackgroundColor3 = topbarColor
 topbar.Size = UDim2.new(1,0,0,topbarSize)
