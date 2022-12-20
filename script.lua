@@ -165,6 +165,7 @@ end)
 if not runOnWebsite then
  window:GetPropertyChangedSignal("Visible"):Connect(function()
   if not window.Visible then
+   print("Exiting Loop & Closing Game Studio")
    updateStarted = true
   end
  end)
