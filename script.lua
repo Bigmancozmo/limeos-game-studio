@@ -163,14 +163,11 @@ end)
 
 -- Auto-Update --
 if not runOnWebsite then
- window:GetPropertyChangedSignal("Visible"):Connect(function()
-  if not window.Visible then
-   print("Exiting Loop & Closing Game Studio")
-   loadlib("LimeAppFramework").CloseProcess(appName)
-   updateStarted = true
-  end
- end)
  while not updateStarted do -- created with help from palenoobs
+  if window == uifolder() then
+   updateStarted = true
+   print("closing...")
+  end
   local ver = HttpGet(updateVersionUrl)
   print(ver)
   if APP_VERSION.."\n" ~= ver and promptedUpdate == false then
