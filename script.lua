@@ -5,11 +5,11 @@ function handleError(err)
  loadlib("LimeAppFramework").CloseProcess(appName)
 end
 
-local s, e = pcall(function() 
- print("Loading v0.0.8")
+function gameEngine()
+ print("Loading v0.0.9")
 
  -- Config --
- local APP_VERSION = "v0.0.8"
+ local APP_VERSION = "v0.0.9"
  local GITHUB_BRANCH = "main"
  local IS_BETA = GITHUB_BRANCH == "beta"
  local appName = "Bigmancozmo's LimeOS Game Studio"
@@ -36,6 +36,7 @@ local s, e = pcall(function()
  else
   window = createapp(appName, 10383211306)
   window.Parent.Size = UDim2.new(1,0,1,0)
+  window.Parent.Position = UDim2.new(0,0,0,0)
  end
  local app = new("Frame", window)
  app.Size = UDim2.new(1,0,1,0)
@@ -196,8 +197,10 @@ local s, e = pcall(function()
    wait(30)
   end
  end
-end)
+end
 
-if not s then
+local s, e = pcall(gameEngine)
+
+if e then
  handleError(e)
 end
