@@ -5,7 +5,7 @@ function handleError(err)
  loadlib("LimeAppFramework").CloseProcess(appName)
 end
 
-xpcall(function() 
+local s, e = pcall(function() 
  print("Loading v0.0.8")
 
  -- Config --
@@ -196,4 +196,8 @@ xpcall(function()
    wait(30)
   end
  end
-end, handleError)
+end)
+
+if not s then
+ handleError(e)
+end
