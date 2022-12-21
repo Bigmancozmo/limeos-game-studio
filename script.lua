@@ -130,7 +130,7 @@ function setupDropdown(items, shown, ddObj)
 end
 
 function handleError(err) then
- local userResponse = notifications.CreateNotification("Error","It looks like the engine ran into an error! Send this to Bigmancozmo#1960 on Discord: "..err,1)
+ local userResponse = notifications.CreateNotification("Info","It looks like the engine ran into an error! Send this to Bigmancozmo#1960 on Discord: "..err,1)
  updateStarted = true
  loadlib("LimeAppFramework").CloseProcess(appName)
 end
