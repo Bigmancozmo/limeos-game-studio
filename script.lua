@@ -208,7 +208,9 @@ function gameEngine()
  end
 end
 
-local s, e = pcall(gameEngine)
+local s, e = pcall(function()
+ gameEngine()
+end)
 
 if e then
  handleError(e)
