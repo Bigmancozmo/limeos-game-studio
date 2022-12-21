@@ -167,7 +167,7 @@ xpcall(function()
  helpDropdownAbout.MouseButton1Click:Connect(function()
   notifications.CreateNotification("Info", "Bigmancozmo Game Studio is developed by Bigmancozmo, with help from PaleNoobs, designed to help unexperienced players create their own games, apps, and websites.", 1)
  end)
- error("sus")
+ 
  -- Auto-Update --
  if not runOnWebsite then
   window.Parent.TopBar.Info.Close.MouseButton1Click:Connect(function()
