@@ -36,12 +36,12 @@ function gameEngine()
   local data = getfile("Bigmancozmo:/gamestudio/config.txt").Data
   if (data == "") or data == nil or (data == "") then
    print("Making data...")
-   local data = {
+   local unencoded = {
     topbar = {35,35,35},
     background = {45,45,45},
     border = {35,35,35}
    }
-   local json = HttpService:JSONEncode(data)
+   local json = HttpService:JSONEncode(unencoded)
    writefile("Bigmancozmo:/gamestudio/config.txt", json)
    data = getfile("Bigmancozmo:/gamestudio/config.txt").Data
   end
