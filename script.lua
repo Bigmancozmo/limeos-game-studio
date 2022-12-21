@@ -7,7 +7,9 @@ end
 
 function gameEngine()
  print("Loading v0.0.9")
-
+ -- Roblox Services --
+ local HttpService = GetService("HttpService")
+ 
  -- Config --
  local APP_VERSION = "v0.0.9"
  local GITHUB_BRANCH = "main"
@@ -24,6 +26,13 @@ function gameEngine()
  local topbarColor = Color3.fromRGB(35,35,35)
  local backgroundColor = Color3.fromRGB(45,45,45)
  local borderColor = Color3.fromRGB(35,35,35)
+ if (explorer.FileExists("Bigmancozmo:/gamestudio/config.txt")) then
+  local data = getfile("Bigmancozmo:/gamestudio/config.txt").Data
+  if (data == "") or data == nil then
+   print("Making data...")
+  end
+  print("Loaded colors!")
+ end
 
  -- Modules --
  local explorer = loadlib("LimeExplorer")
