@@ -34,8 +34,15 @@ function gameEngine()
  local borderColor = Color3.fromRGB(35,35,35)
  if (explorer.FileExists("Bigmancozmo:/gamestudio/config.txt")) then
   local data = getfile("Bigmancozmo:/gamestudio/config.txt").Data
-  if (data == "") or data == nil then
+  if (data == "") or data == nil or (data == "") then
    print("Making data...")
+   local data = {
+    topbar = {35,35,35},
+    background = {45,45,45},
+    border = {35,35,35}
+   }
+   local json = HttpService:JSONEncode(data)
+   writefile("Bigmancozmo:/gamestudio/config.txt", json)
   end
   print("Loaded colors!")
  end
