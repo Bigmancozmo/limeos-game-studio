@@ -32,6 +32,8 @@ function gameEngine()
  local topbarColor = Color3.fromRGB(35,35,35)
  local backgroundColor = Color3.fromRGB(45,45,45)
  local borderColor = Color3.fromRGB(35,35,35)
+ 
+ -- Load Saved Colors --
  if (explorer.FileExists("Bigmancozmo:/gamestudio/config.txt")) then
   local data = getfile("Bigmancozmo:/gamestudio/config.txt").Data
   if (data == "") or data == nil or (data == "") then
@@ -193,6 +195,9 @@ function gameEngine()
  end)
  helpDropdownAbout.MouseButton1Click:Connect(function()
   notifications.CreateNotification("Info", "Bigmancozmo Game Studio is developed by Bigmancozmo, with help from PaleNoobs, designed to help unexperienced players create their own games, apps, and websites.", 1)
+ end)
+ helpDropdownThemes.MouseButton1Click:Connect(function()
+  
  end)
  
  -- Auto-Update --
