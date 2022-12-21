@@ -43,7 +43,15 @@ function gameEngine()
    }
    local json = HttpService:JSONEncode(data)
    writefile("Bigmancozmo:/gamestudio/config.txt", json)
+   data = getfile("Bigmancozmo:/gamestudio/config.txt").Data
   end
+  local decoded = HttpService:JSONDecode(data)
+  local tb = decoded["topbar"]
+  local bg = decoded["background"]
+  local br = decoded["border"]
+  topbarColor = Color3.fromRGB(tb[1], tb[2], tb[3])
+  backgroundColor = Color3.fromRGB(bg[1], bg[2], bg[3])
+  borderColor = Color3.fromRGB(br[1], br[2], br[3])
   print("Loaded colors!")
  end
 
