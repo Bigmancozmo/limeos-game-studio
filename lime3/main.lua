@@ -4,10 +4,11 @@
 -- Modules --
 local explorer = loadlib("FileSystem")
 local notifications = loadlib("NotificationManager")
+local http = loadlib("Http")
 
 local function handleError(err)
  local userResponse = notifications.SendNotification("Info","It looks like the engine ran into an error! Send this to @bigmancozmo on Discord: "..err,1)
- loadlib("ApplicationHandler").ExitProcess(appName)
+ loadlib("ApplicationHandler").ExitProcess("Bigmancozmo's LimeOS Game Studio")
 end
 
 local function gameEngine()
@@ -32,19 +33,20 @@ local function gameEngine()
  
  -- Load Saved Colors --
  if (explorer.FileExists("C:/Bigmancozmo/gamestudio/config.txt")) then
-  local data = getfile("C:/Bigmancozmo/gamestudio/config.txt").Data
-  if (data == "") or data == nil or (data == "") then
+  local data = explorer.GetFile("C:/Bigmancozmo/gamestudio/config.txt").Data
+  if (data == "") or data == nil or (#data == 0) then
    print("Making data...")
-   local unencoded = {
+   local awesomeData = {
     topbar = {35,35,35},
     background = {45,45,45},
     border = {35,35,35}
    }
-   local json = HttpService:JSONEncode(unencoded)
-   writefile("C:/Bigmancozmo/gamestudio/config.txt", json)
-   data = getfile("C:/Bigmancozmo/gamestudio/config.txt").Data
+   
+   local json = http.JSONEncode(awesomeData)
+   explorer.WriteFile("C:/Bigmancozmo/gamestudio/config.txt", json, "System", true)
+   data = explorer.GetFile("C:/Bigmancozmo/gamestudio/config.txt").Data
   end
-  local decoded = HttpService:JSONDecode(data)
+  local decoded = http.JSONDecode(data)
   local tb = decoded["topbar"]
   local bg = decoded["background"]
   local br = decoded["border"]
@@ -81,19 +83,19 @@ local function gameEngine()
 
  -- Create Files/Folders and Repair Existing Ones --
  if not (explorer.FileExists("C:/Bigmancozmo")) then
-  explorer.CreateDirectory("C:/Bigmancozmo")
+  explorer.CreateDirectory("C:/Bigmancozmo", "R-W", "System")
   print("Created Bigmancozmo folder")
  end
  if not (explorer.FileExists("C:/Bigmancozmo/gamestudio")) then
-  mkdir("C:/Bigmancozmo/gamestudio")
+  explorer.CreateDirectory("C:/Bigmancozmo/gamestudio", "R-W", "System")
   print("Created gamestudio folder")
  end
  if not (explorer.FileExists("C:/Bigmancozmo/gamestudio/config.txt")) then
-  mkfile("C:/Bigmancozmo/gamestudio/config.txt")
+  explorer.CreateFile("C:/Bigmancozmo/gamestudio/config.txt", nil, "R-W", "System")
   print("Created config file")
  end
  if not (explorer.FileExists("C:/Bigmancozmo/gamestudio/projects")) then
-  mkdir("C:/Bigmancozmo/gamestudio/projects")
+  explorer.CreateDirectory("C:/Bigmancozmo/gamestudio/projects", "R-W", "System")
   print("Created projects folder")
  end
 
@@ -105,23 +107,23 @@ local function gameEngine()
  if runOnWebsite then
   topbar = new("ScrollingFrame", window)
  else
-  topbar = new("Frame", window)
+  topbar = Lime.CreateUI(window, "Frame")
  end
- local topbarList = new("UIListLayout", topbar)
- local saveBtn = new("TextButton", topbar)
- local saveAsBtn = new("TextButton", topbar)
- local testBtn = new("TextButton", topbar)
- local webExportBtn = new("TextButton", topbar)
- local appExportBtn = new("TextButton", topbar)
- local helpBtn = new("TextButton", topbar)
- local helpDropdown = new("Frame", helpBtn)
- local helpDropdownThemes = new("TextButton", helpDropdown)
- local helpDropdownTutorials = new("TextButton", helpDropdown)
- local helpDropdownCredits = new("TextButton", helpDropdown)
- local helpDropdownAbout = new("TextButton", helpDropdown)
+ local topbarList = Lime.CreateUI(topbar, "UIListLayout")
+ local saveBtn = Lime.CreateUI(topbar, "TextButton")
+ local saveAsBtn = Lime.CreateUI(topbar, "TextButton")
+ local testBtn = Lime.CreateUI(topbar, "TextButton")
+ local webExportBtn = Lime.CreateUI(topbar, "TextButton")
+ local appExportBtn = Lime.CreateUI(topbar, "TextButton")
+ local helpBtn = Lime.CreateUI(topbar, "TextButton")
+ local helpDropdown = Lime.CreateUI(helpBtn, "Frame")
+ local helpDropdownThemes = Lime.CreateUI(helpDropdown, "TextButton")
+ local helpDropdownTutorials = Lime.CreateUI(helpDropdown, "TextButton")
+ local helpDropdownCredits = Lime.CreateUI(helpDropdown, "TextButton")
+ local helpDropdownAbout = Lime.CreateUI(helpDropdown, "TextButton")
 
  -- Functions --
- function setupTopbarButton(text, btn, xSize)
+ local function setupTopbarButton(text, btn, xSize)
   btn.TextSize = 15
   btn.Font = Enum.Font.Gotham
   btn.BackgroundColor3 = topbarColor
@@ -129,21 +131,21 @@ local function gameEngine()
   btn.BorderSizePixel = 0
   btn.TextColor3 = Color3.new(1,1,1)
   btn.Text = text
-  new("UICorner", btn)
+  Lime.CreateUI(btn, "UICorner")
   return btn
  end
 
- function setupDropdown(items, shown, ddObj)
+ local function setupDropdown(items, shown, ddObj)
   local ddObjs = #items
   ddObj.Visible = shown
   ddObj.BackgroundColor3 = topbarColor
   ddObj.Position = UDim2.new(0,0,0,topbarSize)
   if not ddObj:FindFirstChild("List") then
-   local listlayout = new("UIListLayout", ddObj)
+   local listlayout = Lime.CreateUI(ddObj, "UIListLayout")
    listlayout.Name = "List"
   end
   if not ddObj:FindFirstChild("Corner") then
-   local listlayout = new("UICorner", ddObj)
+   local listlayout = Lime.CreateUI(ddObj, "UICorner")
    listlayout.Name = "Corner"
   end
   ddObj.Size = UDim2.new(0, 200, 0, topbarSize*ddObjs)
@@ -156,7 +158,7 @@ local function gameEngine()
     v.Font = Enum.Font.Gotham
     v.TextColor3 = Color3.new(1,1,1)
     if not v:FindFirstChild("Corner") then
-     local corner = new("UICorner", v)
+     local corner = Lime.CreateUI(v, "UICorner")
      corner.Name = "Corner"
     end
    end
@@ -197,35 +199,6 @@ local function gameEngine()
  helpDropdownThemes.MouseButton1Click:Connect(function()
   
  end)
- 
- -- Auto-Update --
- if not runOnWebsite then
-  window.Parent.TopBar.Info.Close.MouseButton1Click:Connect(function()
-   updateStarted = true
-   print("App closed!")
-  end)
-  while not updateStarted do -- created with help from palenoobs
-   local ver = HttpGet(updateVersionUrl)
-   print(ver)
-   if APP_VERSION.."\n" ~= ver and promptedUpdate == false then
-    local str2 = string.gsub(string.gsub(ver, "%.", ""), "%v", "")
-    local num2 = tonumber(str2)
-    local str1 = string.gsub(string.gsub(APP_VERSION, "%.", ""), "%v", "")
-    local num1 = tonumber(str1)
-    if num1 < num2 then
-     print("Update Available!")
-     local userResponse = notifications.CreateNotification("Info","Update Found! Restart App?",2)
-     promptedUpdate = true
-     if userResponse == 2 then
-      updateStarted = true
-      loadlib("LimeAppFramework").ExitProcess(appName)
-      notifications.SendNotification("Hey!", "Please restart the engine to update!")
-     end
-    end
-   end
-   wait(30)
-  end
- end
 end
 
 local s, e = pcall(function()
