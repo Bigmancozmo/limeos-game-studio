@@ -5,14 +5,17 @@
 local explorer = loadlib("FileSystem")
 local notifications = loadlib("NotificationManager")
 
-function handleError(err)
+for i, v in pairs(notifications) do
+ print(tostring(v))   
+end
+
+local function handleError(err)
  local userResponse = notifications.CreateNotification("Info","It looks like the engine ran into an error! Send this to @bigmancozmo on Discord: "..err,1)
- updateStarted = true
  loadlib("ApplicationHandler").ExitProcess(appName)
 end
 
-function gameEngine()
- print("Loading v0.0.9")
+local function gameEngine()
+ print("Loading v0.0.1")
  
  -- Roblox Services --
  local HttpService = GetService("HttpService")
