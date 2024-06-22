@@ -5,20 +5,13 @@
 local explorer = loadlib("FileSystem")
 local notifications = loadlib("NotificationManager")
 
-for i, v in pairs(notifications) do
- print(tostring(v))   
-end
-
 local function handleError(err)
- local userResponse = notifications.CreateNotification("Info","It looks like the engine ran into an error! Send this to @bigmancozmo on Discord: "..err,1)
+ local userResponse = notifications.SendNotification("Info","It looks like the engine ran into an error! Send this to @bigmancozmo on Discord: "..err,1)
  loadlib("ApplicationHandler").ExitProcess(appName)
 end
 
 local function gameEngine()
  print("Loading v0.0.1")
- 
- -- Roblox Services --
- local HttpService = GetService("HttpService")
  
  -- Config --
  local APP_VERSION = "v0.0.1"
@@ -38,8 +31,8 @@ local function gameEngine()
  local borderColor = Color3.fromRGB(35,35,35)
  
  -- Load Saved Colors --
- if (explorer.FileExists("Bigmancozmo:/gamestudio/config.txt")) then
-  local data = getfile("Bigmancozmo:/gamestudio/config.txt").Data
+ if (explorer.FileExists("C:/Bigmancozmo/gamestudio/config.txt")) then
+  local data = getfile("C:/Bigmancozmo/gamestudio/config.txt").Data
   if (data == "") or data == nil or (data == "") then
    print("Making data...")
    local unencoded = {
@@ -48,8 +41,8 @@ local function gameEngine()
     border = {35,35,35}
    }
    local json = HttpService:JSONEncode(unencoded)
-   writefile("Bigmancozmo:/gamestudio/config.txt", json)
-   data = getfile("Bigmancozmo:/gamestudio/config.txt").Data
+   writefile("C:/Bigmancozmo/gamestudio/config.txt", json)
+   data = getfile("C:/Bigmancozmo/gamestudio/config.txt").Data
   end
   local decoded = HttpService:JSONDecode(data)
   local tb = decoded["topbar"]
@@ -66,17 +59,18 @@ local function gameEngine()
  if runOnWebsite then
   window = website()
  else
-  window = createapp(appName, 10383211306)
-  window.Parent.Size = UDim2.new(1,0,1,0)
-  window.Parent.Position = UDim2.new(0,0,0,0)
+  window = Lime.CreateWindow(appName)
+  window.Size = UDim2.new(0.75,0,0.75,0)
+  window.AnchorPoint = Vector2.new(0.5, 0.5)      
+  window.Position = UDim2.new(0.5,0,0.5,0)
  end
- local app = new("Frame", window)
+ local app = Lime.CreateUI(window, "Frame")
  app.Size = UDim2.new(1,0,1,0)
  app.BackgroundColor3 = backgroundColor
  app.BorderSizePixel = 0
 
  -- Loading Screen --
- local loadingscreen = new("TextLabel",window)
+ local loadingscreen = Lime.CreateUI(window,"TextLabel")
  loadingscreen.Size = UDim2.new(1,0,1,0)
  loadingscreen.BackgroundTransparency = 1
  loadingscreen.Text = "Loading..."
@@ -86,20 +80,20 @@ local function gameEngine()
  loadingscreen.Font = Enum.Font.Gotham
 
  -- Create Files/Folders and Repair Existing Ones --
- if not (explorer.FileExists("Bigmancozmo:")) then
-  explorer.CreateDrive("Bigmancozmo")
-  print("Created Bigmancozmo drive")
+ if not (explorer.FileExists("C:/Bigmancozmo")) then
+  explorer.CreateDirectory("C:/Bigmancozmo")
+  print("Created Bigmancozmo folder")
  end
- if not (explorer.FileExists("Bigmancozmo:/gamestudio")) then
-  mkdir("Bigmancozmo:/gamestudio")
+ if not (explorer.FileExists("C:/Bigmancozmo/gamestudio")) then
+  mkdir("C:/Bigmancozmo/gamestudio")
   print("Created gamestudio folder")
  end
- if not (explorer.FileExists("Bigmancozmo:/gamestudio/config.txt")) then
-  mkfile("Bigmancozmo:/gamestudio/config.txt")
+ if not (explorer.FileExists("C:/Bigmancozmo/gamestudio/config.txt")) then
+  mkfile("C:/Bigmancozmo/gamestudio/config.txt")
   print("Created config file")
  end
- if not (explorer.FileExists("Bigmancozmo:/gamestudio/projects")) then
-  mkdir("Bigmancozmo:/gamestudio/projects")
+ if not (explorer.FileExists("C:/Bigmancozmo/gamestudio/projects")) then
+  mkdir("C:/Bigmancozmo/gamestudio/projects")
   print("Created projects folder")
  end
 
@@ -198,7 +192,7 @@ local function gameEngine()
   setupDropdown({helpDropdownThemes, helpDropdownTutorials, helpDropdownCredits, helpDropdownAbout}, not (helpDropdown.Visible), helpDropdown)
  end)
  helpDropdownAbout.MouseButton1Click:Connect(function()
-  notifications.CreateNotification("Info", "Bigmancozmo Game Studio is developed by Bigmancozmo, with help from PaleNoobs, designed to help unexperienced players create their own games, apps, and websites.", 1)
+  notifications.CreateNotification("Info", "Bigmancozmo Game Studio is developed by Bigmancozmo, designed to help unexperienced players create their own games, apps, and websites.", 1)
  end)
  helpDropdownThemes.MouseButton1Click:Connect(function()
   
@@ -224,8 +218,8 @@ local function gameEngine()
      promptedUpdate = true
      if userResponse == 2 then
       updateStarted = true
-      loadlib("LimeAppFramework").CloseProcess(appName)
-      loadlib("Loadstring")(HttpGet("https://raw.githubusercontent.com/Bigmancozmo/limeos-game-studio/"..GITHUB_BRANCH.."/script.lua"), getfenv())()
+      loadlib("LimeAppFramework").ExitProcess(appName)
+      notifications.SendNotification("Hey!", "Please restart the engine to update!")
      end
     end
    end
