@@ -30,8 +30,7 @@ local window = Lime.CreateWindow("Professional LimeOS Uninstaller")
 local textlabel = Lime.CreateUI(window, "TextLabel")
 textlabel.Text = "Are you sure you want to uninstall LimeOS? (this is not a joke)"
 textlabel.Size = UDim2.new(1,0,0.1,0)
-textlabel.TextScaled = truelocal textlabel = Lime.CreateUI(window, "TextLabel")
-
+textlabel.TextScaled = true
 
 local btn = Lime.CreateUI(window, "TextButton")
 btn.Text = "Uninstall my system."
