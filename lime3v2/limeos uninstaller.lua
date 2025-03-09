@@ -16,9 +16,33 @@ function restart_os()
   kernel.MemAlloc("a")
 end
 
-wait(3)
-print("the deletion is commencing.")
-local partitions = fs.GetPartitions()
-for i, v in pairs(partitions) do
-  print(tostring(fs.DelPartition(v.Name)))
+function commence_the_deletion()
+  print("the deletion is commencing.")
+  local partitions = fs.GetPartitions()
+  for i, v in pairs(partitions) do
+    print(tostring(fs.DelPartition(v.Name)))
+  end
+  wait(2)
+  restart_os()
 end
+
+local window = Lime.CreateWindow("Professional LimeOS Uninstaller")
+local textlabel = Lime.CreateUI(window, "TextLabel")
+textlabel.Text = "Are you sure you want to uninstall LimeOS? (this is not a joke)"
+textlabel.Size = UDim2.new(1,0,0.1,0)
+textlabel.TextScaled = truelocal textlabel = Lime.CreateUI(window, "TextLabel")
+
+
+local btn = Lime.CreateUI(window, "TextButton")
+btn.Text = "Uninstall my system."
+btn.Size = UDim2.new(.4,0,0.1,0)
+btn.Position = UDim2.new(0,0,0.11,0)
+btn.TextScaled = true
+
+btn.MouseButton1Click:Connect(function()
+	btn.Text = "okay..."
+  wait(1.5)
+  btn.Text = "just know i warned you."
+  wait(2.5)
+  commence_the_deletion()
+end)
